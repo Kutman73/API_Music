@@ -4,7 +4,10 @@ from .service import *
 
 
 class Artist(models.Model):
-    artist_name = models.CharField(max_length=77, unique=True)
+    artist_name = models.CharField(
+        max_length=77,
+        unique=True
+    )
 
     def __str__(self):
         return self.artist_name
@@ -34,11 +37,16 @@ class Album(models.Model):
 
 
 class Song(models.Model):
-    artist = models.ForeignKey(Artist,
-                               on_delete=models.CASCADE,
-                               related_name='song')
-    album = models.ManyToManyField(Album,
-                                   blank=True)
+    artist = models.ForeignKey(
+        Artist,
+        on_delete=models.CASCADE,
+    )
+    album = models.ForeignKey(
+        Album,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
     audio_file = models.FileField(
         storage=OverWriteStorage(),
         upload_to=FilePath.get_path_to_audio_file,
